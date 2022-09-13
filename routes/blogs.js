@@ -1,6 +1,9 @@
 var express = require('express');
 const app = require('../app');
 var router = express.Router();
+var {
+    validateBlogData
+} = require('../validation/blogs')
 
 
 const sampleBlogs = [{
@@ -113,4 +116,105 @@ router.delete('/single/:blogTitleToDelete', function (req, res, next) {
     })
 });
 // Module.exports is listing the variables in this file to send to other files
+
+
+// POST
+
+router.post('/create-one', function (req, res, next) {
+    const title = req.body.title
+    const text = req.body.text
+    const author = req.body.author
+    const category = req.body.category
+
+    const blogData = {
+        title,
+        text,
+        author,
+        category,
+        createdAt: new Date(),
+        lastModified: new Date()
+    }
+
+
+    const blogCheck = validateBlogData(blogData)
+
+    if (blogCheck.isValid === false) {
+        res.json({
+            success: false,
+            message: blogCheck.message
+        })
+        return;
+    }
+    sampleBlogs.push(blogData)
+    res.json({
+        success: true
+    })
+})
+
+
+// PUT
+
+
+router.put('/update-one/:blogTitle', function (req, res, next) {
+    const originalBlogIndex = sampleBlogs.findIndex((blog) => {
+        if (blog.title === req.params.blogTitle) {
+            console.log("Blog Titles Match!")
+            return true
+        } else {
+            console.log("Blog Titles Do Not Match")
+            return false
+        }
+    })
+
+    const originalBlog = sampleBlogs[originalBlogIndex]
+
+    const updatedBlog = {
+        title: originalBlog.title,
+        text: originalBlog.text,
+        author: originalBlog.author,
+        category: originalBlog.category,
+        createdAt: originalBlog.createdAt,
+        lastModified: new Date()
+    }
+
+    console.log("updatedBlog Before Update ", updatedBlog)
+
+    if (req.body.title !== undefined) {
+        updatedBlog.title = req.body.title
+    }
+
+    if (req.body.text !== undefined) {
+        updatedBlog.text = req.body.text
+    }
+
+    if (req.body.author !== undefined) {
+        updatedBlog.author = req.body.author
+    }
+
+    if (req.body.category !== undefined) {
+        updatedBlog.category = req.body.category
+    }
+
+    if (req.body.createdAt !== undefined) {
+        updatedBlog.createdAt = req.body.createdAt
+    }
+
+    console.log("updatedBlog After Update ", updatedBlog)
+
+
+    sampleBlogs[originalBlogIndex] = updatedBlog
+
+    console.log("sampleBlogs after ", sampleBlogs)
+
+    res.json({
+        success: true
+    })
+
+})
+
+
+
+
+
+
 module.exports = router;
