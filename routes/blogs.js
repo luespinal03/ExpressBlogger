@@ -45,14 +45,17 @@ const sampleBlogs = [{
     },
 ];
 
-/* GET home page. */
+/* GET all titles */
 router.get('/all', function (req, res, next) {
     res.json(sampleBlogs)
 });
 
+
+
+// GET single title
 router.get('/single/:blogTitleToGet', function (req, res, next) {
-    const foundBlogIndex = sampleBlogs.findIndex((blog) => {
-        if (blog.title === req.params.blogTitleToGet) {
+    const foundBlogIndex = sampleBlogs.findIndex((blogTitle) => {
+        if (blogTitle.title === req.params.blogTitleToGet) {
             console.log("Blog Found !")
             return true
         } else {
@@ -66,6 +69,9 @@ router.get('/single/:blogTitleToGet', function (req, res, next) {
     res.json(foundBlog)
 });
 
+
+
+// DELETE a single title
 router.delete('/single/:blogTitleToDelete', function (req, res, next) {
     const blogIndexToDelete = sampleBlogs.findIndex((blog) => {
         if (blog.title === req.params.blogTitleToDelete) {
