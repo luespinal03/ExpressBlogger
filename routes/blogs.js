@@ -118,6 +118,9 @@ router.delete('/single/:blogTitleToDelete', function (req, res, next) {
 // Module.exports is listing the variables in this file to send to other files
 
 
+/************************** DAY 2 STUFF ****************************** */
+
+
 // POST
 
 router.post('/create-one', function (req, res, next) {
@@ -156,62 +159,26 @@ router.post('/create-one', function (req, res, next) {
 // PUT
 
 router.put('/update-one/:blogTitle', function (req, res, next) {
+    const title = req.params.blogTitle
+    const text = req.body.text
+    const author = req.body.author
+    const category = req.body.category
 
     const originalBlogIndex = sampleBlogs.findIndex((blog) => {
-
-        const blogTitleToUpdate = req.params.blogTitle;
-
-        if (blog.title === blogTitleToUpdate) {
-            console.log("Blog Titles Match!")
-            return true
-        } else {
-            console.log("Blog Titles Do Not Match")
-            return false
-        }
+        return blog.title === title
     })
 
     const originalBlog = sampleBlogs[originalBlogIndex]
-    // console.log(originalBlog)
 
-
-    // const blogCheck = validateBlogData(blogData)
-
-    if (originalBlog === undefined) {
-        res.json({
-            message: "Original Blog does not exist"
-        })
-        return;
-    }
-
-    const updatedBlog = {
+    const blogData = {
         title: originalBlog.title,
-        text: originalBlog.text,
-        author: originalBlog.author,
-        category: originalBlog.category,
+        text,
+        author,
+        category,
         createdAt: originalBlog.createdAt,
         lastModified: new Date()
     }
-    // console.log("updatedBlog Before Update ", updatedBlog)
 
-    if (req.body.title !== undefined) {
-        updatedBlog.title = req.body.title
-    }
-
-    if (req.body.text !== undefined) {
-        updatedBlog.text = req.body.text
-    }
-
-    if (req.body.author !== undefined) {
-        updatedBlog.author = req.body.author
-    }
-
-    if (req.body.category !== undefined) {
-        updatedBlog.category = req.body.category
-    }
-
-    if (req.body.createdAt !== undefined) {
-        updatedBlog.createdAt = req.body.createdAt
-    }
 
     const blogCheck = validateBlogData(blogData)
 
@@ -222,16 +189,53 @@ router.put('/update-one/:blogTitle', function (req, res, next) {
         })
         return;
     }
-    // console.log("updatedBlog After Update ", updatedBlog)
 
-
-    sampleBlogs[originalBlogIndex] = updatedBlog
-
-    // console.log("sampleBlogs after ", sampleBlogs)
+    sampleBlogs[originalBlogIndex] = blogData
 
     res.json({
         success: true
     })
+
+
+
+    // const updatedBlog = {
+    //     title: originalBlog.title,
+    //     text: originalBlog.text,
+    //     author: originalBlog.author,
+    //     category: originalBlog.category,
+    //     createdAt: originalBlog.createdAt,
+    //     lastModified: new Date()
+    // }
+    // console.log("updatedBlog Before Update ", updatedBlog)
+
+    // if (req.body.title !== undefined) {
+    //     updatedBlog.title = req.body.title
+    // }
+
+    // if (req.body.text !== undefined) {
+    //     updatedBlog.text = req.body.text
+    // }
+
+    // if (req.body.author !== undefined) {
+    //     updatedBlog.author = req.body.author
+    // }
+
+    // if (req.body.category !== undefined) {
+    //     updatedBlog.category = req.body.category
+    // }
+
+    // if (req.body.createdAt !== undefined) {
+    //     updatedBlog.createdAt = req.body.createdAt
+    // }
+
+
+    // console.log("updatedBlog After Update ", updatedBlog)
+
+
+
+    // console.log("sampleBlogs after ", sampleBlogs)
+
+
 
 })
 
