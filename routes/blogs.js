@@ -171,6 +171,17 @@ router.put('/update-one/:blogTitle', function (req, res, next) {
     })
 
     const originalBlog = sampleBlogs[originalBlogIndex]
+    // console.log(originalBlog)
+
+
+    // const blogCheck = validateBlogData(blogData)
+
+    if (originalBlog === undefined) {
+        res.json({
+            message: "Original Blog does not exist"
+        })
+        return;
+    }
 
     const updatedBlog = {
         title: originalBlog.title,
@@ -180,8 +191,7 @@ router.put('/update-one/:blogTitle', function (req, res, next) {
         createdAt: originalBlog.createdAt,
         lastModified: new Date()
     }
-
-    console.log("updatedBlog Before Update ", updatedBlog)
+    // console.log("updatedBlog Before Update ", updatedBlog)
 
     if (req.body.title !== undefined) {
         updatedBlog.title = req.body.title
@@ -203,12 +213,21 @@ router.put('/update-one/:blogTitle', function (req, res, next) {
         updatedBlog.createdAt = req.body.createdAt
     }
 
-    console.log("updatedBlog After Update ", updatedBlog)
+    const blogCheck = validateBlogData(blogData)
+
+    if (blogCheck.isValid === false) {
+        res.json({
+            success: false,
+            message: blogCheck.message
+        })
+        return;
+    }
+    // console.log("updatedBlog After Update ", updatedBlog)
 
 
     sampleBlogs[originalBlogIndex] = updatedBlog
 
-    console.log("sampleBlogs after ", sampleBlogs)
+    // console.log("sampleBlogs after ", sampleBlogs)
 
     res.json({
         success: true

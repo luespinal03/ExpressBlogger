@@ -7,7 +7,7 @@ const validateBlogData = (blogData) => {
         }
     }
 
-    if (blogData.title.length > 40) {
+    if (blogData.title.length >= 40) {
         return {
             isValid: false,
             message: 'Title must be less than 40 characters'
@@ -28,7 +28,7 @@ const validateBlogData = (blogData) => {
         }
     }
 
-    if (blogData.author.length > 40) {
+    if (blogData.author.length >= 40) {
         return {
             isValid: false,
             message: 'Author name must be less than 40 characters'

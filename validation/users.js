@@ -7,7 +7,7 @@ const validateUserData = (userData) => {
         // email is required and it must be a string
         return {
             isValid: false,
-            message: "email is required and it must be a string"
+            message: "Email is required and it must be a string"
         }
     }
 
@@ -34,12 +34,14 @@ const validateUserData = (userData) => {
         let isFavoriteFoodsStrings = true;
 
         for (let i = 0; i < userData.favoriteFoods.length; i++) {
+
             if (typeof (userData.favoriteFoods[i]) !== 'string') {
                 isFavoriteFoodsStrings = false
             }
         }
 
         if (isFavoriteFoodsStrings === false) {
+
             return {
                 isValid: false
             }
@@ -49,6 +51,7 @@ const validateUserData = (userData) => {
     if (userData.age !== undefined && typeof (userData.age) !== "number") {
         // age is NOT required, so first we check to see if it even exists before checking to see if the type is anything except 'number'
         return {
+
             isValid: false,
             message: "Age must be a number"
         }
