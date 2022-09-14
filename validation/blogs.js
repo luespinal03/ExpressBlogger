@@ -39,10 +39,6 @@ const validateBlogData = (blogData) => {
         isValid: true
     }
 
-
-
-
-
 }
 
 module.exports = {

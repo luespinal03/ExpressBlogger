@@ -135,7 +135,6 @@ router.post('/create-one', function (req, res, next) {
         lastModified: new Date()
     }
 
-
     const blogCheck = validateBlogData(blogData)
 
     if (blogCheck.isValid === false) {
@@ -145,7 +144,9 @@ router.post('/create-one', function (req, res, next) {
         })
         return;
     }
+
     sampleBlogs.push(blogData)
+
     res.json({
         success: true
     })
@@ -154,10 +155,13 @@ router.post('/create-one', function (req, res, next) {
 
 // PUT
 
-
 router.put('/update-one/:blogTitle', function (req, res, next) {
+
     const originalBlogIndex = sampleBlogs.findIndex((blog) => {
-        if (blog.title === req.params.blogTitle) {
+
+        const blogTitleToUpdate = req.params.blogTitle;
+
+        if (blog.title === blogTitleToUpdate) {
             console.log("Blog Titles Match!")
             return true
         } else {
@@ -211,10 +215,6 @@ router.put('/update-one/:blogTitle', function (req, res, next) {
     })
 
 })
-
-
-
-
 
 
 module.exports = router;

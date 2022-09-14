@@ -4,17 +4,21 @@ var router = express.Router();
 // This is a named import (require). Since /validation/users.js is exporting a whole object with key/value pairs, the variable value that comes through the import will be that object. The easiest way to access the named functions is to write the key name in an object when you write the import (require) statement like this:
 var {
   validateUserData
-} = require("../validation/users.js")
+} = require("../validation/users")
 
 // single dot means current directory, two dots one level higher
 
 const userList = [];
+
+// GET ALL
 
 /* GET users listing. */
 // Because our base path for users.js is "/users" and the route names concatenate, the final path for this route is going to be "localhost:3000/users/all"
 router.get('/all', function (req, res, next) {
   res.send('respond with a resource');
 });
+
+// GET SINGLE
 
 // The final url for this route is going to be "/users/single"
 router.get('/single', (req, res) => {
@@ -23,6 +27,8 @@ router.get('/single', (req, res) => {
     user: "Single User"
   })
 })
+
+// POST
 
 router.post('/create-one', (req, res) => {
 
