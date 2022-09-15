@@ -159,6 +159,7 @@ router.post('/create-one', function (req, res, next) {
 // PUT
 
 router.put('/update-one/:blogTitle', function (req, res, next) {
+    // const title = req.body.title (if you want to change the title)
     const title = req.params.blogTitle
     const text = req.body.text
     const author = req.body.author
@@ -171,6 +172,7 @@ router.put('/update-one/:blogTitle', function (req, res, next) {
     const originalBlog = sampleBlogs[originalBlogIndex]
 
     const blogData = {
+        // title,
         title: originalBlog.title,
         text,
         author,
